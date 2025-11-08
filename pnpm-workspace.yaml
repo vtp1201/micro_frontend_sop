@@ -1,0 +1,8 @@
+packages:
+  - apps/gateway
+  - apps/shells/*
+  - packages/*
+  - fragments/*
+
+ignoredBuiltDependencies:
+  - esbuild

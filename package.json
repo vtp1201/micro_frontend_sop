@@ -1,0 +1,51 @@
+{
+  "name": "micro-fe-sop",
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.6.5",
+  "pnpm": {
+    "overrides": {
+      "rolldown": "^1.0.0-beta.45",
+      "rolldown-vite": "^7.1.17"
+    }
+  },
+  "workspaces": [
+    "apps/*",
+    "apps/shells/*",
+    "fragments/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "fmt": "turbo run fmt",
+    "fix": "turbo run fix",
+    "prepare": "husky",
+    "new:shell": "node scripts/new-shell.mjs",
+    "new:fragment:react": "node scripts/new-fragment-react.mjs",
+    "new:fragment:vue": "node scripts/new-fragment-vue.mjs",
+    "new:fragment:angular": "node scripts/new-fragment-angular.mjs",
+    "new:fragment:next": "node scripts/new-fragment-next.mjs",
+    "clean:node": "node scripts/clean-node-modules.mjs",
+    "clean:lock": "rm -f pnpm-lock.yaml || del pnpm-lock.yaml",
+    "clean:all": "pnpm -s -w -r run clean:node && pnpm -s -w run clean:lock"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
+    "turbo": "^2.5.8",
+    "typescript": "5.9.3",
+    "vite": "7.1.12"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,md,css}": [
+      "biome check --write --no-errors-on-unmatched",
+      "biome format --write"
+    ]
+  },
+  "dependencies": {
+    "web-fragments": "^0.8.2"
+  }
+}

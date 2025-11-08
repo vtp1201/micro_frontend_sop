@@ -1,0 +1,32 @@
+{
+  "name": "gateway",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p .",
+    "start": "node --enable-source-maps dist/server.js",
+    "typecheck": "tsc -p . --noEmit",
+    "lint": "biome check .",
+    "fmt": "biome format --write .",
+    "fix": "biome check --write .",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "http-proxy-middleware": "^3.0.0",
+    "web-fragments": "latest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@types/express": "^4.17.21",
+    "@types/node": "^24.8.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "7.1.12"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

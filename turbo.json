@@ -1,0 +1,27 @@
+{
+  "ui": "tui",
+  "globalDependencies": ["pnpm-lock.yaml"],
+  "globalEnv": ["NODE_ENV", "SHELL_PORT", "PROFILE_PORT", "GATEWAY_PORT"],
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": []
+    },
+
+    "build:fragment": { "outputs": ["dist/**"] },
+    "build:shell": {
+      "dependsOn": ["//fragments/*#build:fragment"],
+      "outputs": ["dist/**"]
+    },
+    "build": {
+      "dependsOn": ["//apps/*#build:shell", "//fragments/*#build:fragment"],
+      "outputs": ["dist/**"]
+    },
+
+    "lint": { "outputs": [] },
+    "fix": { "outputs": [] },
+    "fmt": { "outputs": [] },
+    "typecheck": { "outputs": [] }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "folders": [
+    { "path": ".", "name": "root" },
+    { "path": "apps/gateway" },
+    { "path": "apps/shells" },
+    { "path": "fragments" },
+    { "path": "packages" }
+  ],
+  "settings": {
+    // --- Biome as the default formatter/linter ---
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome",
+    "biome.enabled": true,
+
+    "editor.codeActionsOnSave": {
+      "source.fixAll.biome": "explicit",
+      "source.organizeImports.biome": "explicit"
+    },
+
+    // Disable other formatters/linters to avoid conflicts
+    "eslint.enable": false,
+    "prettier.enable": false,
+
+    // cSpell
+    "cSpell.language": "en,vi",
+
+    // Apply Biome formatter explicitly for common languages
+    "[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
+    "[javascriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+    "[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
+    "[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+    "[json]": { "editor.defaultFormatter": "biomejs.biome" },
+    "[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
+    "[markdown]": { "editor.defaultFormatter": "biomejs.biome" },
+
+    // Search & watcher hygiene for monorepo
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/.next": true,
+      "**/.turbo": true,
+      "**/.vite": true,
+      "**/coverage": true,
+      "**/.pnpm-store": true
+    },
+    "files.watcherExclude": {
+      "**/node_modules/**": true,
+      "**/.pnpm-store/**": true,
+      "**/dist/**": true,
+      "**/build/**": true
+    },
+
+    "files.exclude": {
+      // "**/node_modules": true,
+      // "**/dist": true,
+      "**/.turbo": true
+    },
+
+    // Use the workspace's TS version
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "cSpell.words": ["bradlc", "eamodio"]
+  },
+  "extensions": {
+    "recommendations": [
+      "biomejs.biome",
+      "editorconfig.editorconfig",
+      "eamodio.gitlens",
+      "bradlc.vscode-tailwindcss"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "shell:dev",
+        "type": "shell",
+        "command": "pnpm -C apps/shell dev",
+        "group": "build",
+        "problemMatcher": []
+      },
+      {
+        "label": "profile:dev",
+        "type": "shell",
+        "command": "pnpm -C fragments/profile dev",
+        "group": "build",
+        "problemMatcher": []
+      },
+      {
+        "label": "dev:all",
+        "dependsOrder": "parallel",
+        "dependsOn": ["gateway:dev", "shell:dev", "profile:dev"]
+      },
+
+      // Biome helpers (require package.json scripts: fmt/lint/fix)
+      {
+        "label": "biome:fmt",
+        "type": "shell",
+        "command": "pnpm fmt",
+        "group": "build",
+        "problemMatcher": []
+      },
+      {
+        "label": "biome:lint",
+        "type": "shell",
+        "command": "pnpm lint",
+        "group": "build",
+        "problemMatcher": []
+      },
+      {
+        "label": "biome:fix",
+        "type": "shell",
+        "command": "pnpm fix",
+        "group": "build",
+        "problemMatcher": []
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Attach Gateway (Node)",
+        "type": "node",
+        "request": "attach",
+        "port": 9229,
+        "restart": true
+      },
+      {
+        "name": "Open Shell (Chrome)",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "Debug full system"
+        // "configurations": ["Attach Gateway (Node)", "Open Shell (Chrome)"]
+      }
+    ]
+  }
+}
